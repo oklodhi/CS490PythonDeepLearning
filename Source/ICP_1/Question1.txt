@@ -1,0 +1,7 @@
+1. State differences between Python 2 and Python 3 version.
+
+Answer: Python 2 print statements can be written as: print "hello"
+        Python 2 uses ASCII for string encoding
+
+        Python 3 print statements are written as: print("hello")
+        Python 3 uses unicode for string encoding

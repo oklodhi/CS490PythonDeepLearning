@@ -1,14 +1,23 @@
 # import libraries
-import numpy as np
+from bs4 import BeautifulSoup
+import requests
 
-# create a 1D array of 20 random floats
-original = np.random.uniform(low=1, high=20, size=20)
-print("Original: \n", original)
+# open the website and create a beautifulSoup object from the page
+html = requests.get("https://en.wikipedia.org/wiki/Deep_learning")
+bsobject = BeautifulSoup(html.content, "html.parser")
 
-# reshape the 1D array to a 4x5
-new = original.reshape((4, 5))
-print("Reshaped: \n", new)
+# return title of the website
+title = bsobject.title.string
+print("Title: ", title)
 
-# find the max value of each row and replace by 0, but keep all other dimensions
-x = np.where(new == np.max(new, axis=1, keepdims=True), 0*new, new)
-print("Replaced: \n", x)
+# get all the href links in the 'a' tag and append to list
+links = []
+for i in bsobject.find_all('a'):
+    links.append(i.get('href'))
+print(links)
+
+# write href links to external txt file
+with open('output.txt', 'w') as f:
+    for item in links:
+        f.write(str(item))
+        f.write("\n")
